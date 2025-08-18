@@ -1,6 +1,11 @@
 import express from "express";
 import cors from "cors";
-import { albumRouter, artistRouter, songRouter } from "./routes/index.js";
+import {
+  albumRouter,
+  artistRouter,
+  searchRouter,
+  songRouter,
+} from "./routes/index.js";
 import { redis } from "./lib/redis.js";
 import { cache } from "./middlewares/cache.middleware.js";
 
@@ -16,6 +21,7 @@ app.use(cache);
 app.use("/api/v2/album", albumRouter);
 app.use("/api/v2/song", songRouter);
 app.use("/api/v2/artist", artistRouter);
+app.use("/api/v2/search", searchRouter);
 
 app.get("/api/v2/health", (req, res) => {
   res.status(200).json({ status: "UP" });
