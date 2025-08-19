@@ -19,7 +19,7 @@ export async function getGenres(req: Request, res: Response) {
     });
   } catch (error) {
     console.error("GET GENRES API ERROR", error);
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({ status: false, message: "Internal Server Error", data: {} });
   }
 }
 
@@ -121,7 +121,7 @@ export async function getGenreSongs(req: Request, res: Response) {
     });
   } catch (error) {
     console.error("GET GENRE SONGS API ERROR", error);
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({ status: false, message: "Internal Server Error", data: {} });
   }
 }
 
@@ -168,6 +168,6 @@ export async function getGenreById(req: Request, res: Response) {
     });
   } catch (error) {
     console.error("GET GENRE BY ID API ERROR", error);
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({ status: false, message: "Internal Server Error", data: {} });
   }
 }
