@@ -18,6 +18,12 @@ await redis.connect();
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+// Health check endpoint (no caching)
+app.get("/api/v2/health", (req, res) => {
+  res.status(200).json({ status: "UP" });
+});
+
 app.use(cache);
 
 app.use("/api/v2/album", albumRouter);
@@ -26,10 +32,6 @@ app.use("/api/v2/artist", artistRouter);
 app.use("/api/v2/search", searchRouter);
 app.use("/api/v2/genre", genreRouter);
 app.use("/api/v2/mood", moodRouter);
-
-app.get("/api/v2/health", (req, res) => {
-  res.status(200).json({ status: "UP" });
-});
 
 app.listen(PORT, () => {
   console.log(`Backend Public Server is running on port ${PORT}`);
