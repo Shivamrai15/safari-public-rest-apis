@@ -3,6 +3,7 @@ import cors from "cors";
 import {
   albumRouter,
   artistRouter,
+  genreRouter,
   searchRouter,
   songRouter,
 } from "./routes/index.js";
@@ -22,6 +23,7 @@ app.use("/api/v2/album", albumRouter);
 app.use("/api/v2/song", songRouter);
 app.use("/api/v2/artist", artistRouter);
 app.use("/api/v2/search", searchRouter);
+app.use("/api/v2/genre", genreRouter);
 
 app.get("/api/v2/health", (req, res) => {
   res.status(200).json({ status: "UP" });
