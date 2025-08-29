@@ -94,11 +94,6 @@ export async function getSimilarAlbums(req: Request, res: Response) {
         release: "desc",
       },
       take: 10,
-      select: {
-        id: true,
-        name: true,
-        image: true,
-      },
     });
 
     return res.status(200).json({
@@ -111,5 +106,28 @@ export async function getSimilarAlbums(req: Request, res: Response) {
     res
       .status(500)
       .json({ status: false, message: "Internal Server Error", data: {} });
+  }
+}
+
+export async function getNewReleases(req: Request, res: Response) {
+  try {
+    const albums = await db.album.findMany({
+      take: 15,
+      orderBy: {
+        release: "desc",
+      },
+    });
+    return res.json({
+      status: true,
+      message: "New releases fetched successfully",
+      data: albums,
+    });
+  } catch (error) {
+    console.error("GET NEW RELEASES ERROR:", error);
+    return res.status(500).json({
+      status: false,
+      message: "Internal Server Error",
+      data: {},
+    });
   }
 }
