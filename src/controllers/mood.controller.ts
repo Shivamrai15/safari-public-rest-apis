@@ -3,6 +3,7 @@ import type { Album, Mood, Song } from "../../generated/prisma/index.js";
 import { db } from "../lib/db.js";
 
 const BATCH = 10;
+const MOODS_BATCH = 25;
 
 export async function getMoodById(req: Request, res: Response) {
   try {
@@ -67,7 +68,7 @@ export async function getMoods(req: Request, res: Response) {
 
     if (cursor) {
       moods = await db.mood.findMany({
-        take: BATCH,
+        take: MOODS_BATCH,
         skip: 1,
         cursor: {
           id: cursor as string,
@@ -84,7 +85,7 @@ export async function getMoods(req: Request, res: Response) {
       });
     } else {
       moods = await db.mood.findMany({
-        take: BATCH,
+        take: MOODS_BATCH,
         orderBy: {
           name: "desc",
         },
@@ -99,8 +100,8 @@ export async function getMoods(req: Request, res: Response) {
 
     let nextCursor = null;
 
-    if (moods.length === BATCH) {
-      nextCursor = moods[BATCH - 1]?.id;
+    if (moods.length === MOODS_BATCH) {
+      nextCursor = moods[MOODS_BATCH - 1]?.id;
     }
 
     return res.status(200).json({
